@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александра Иваненко](https://up.htmlacademy.ru/javascript/12/user/613417).
-* Наставник: `Неизвестно`.
+* Наставник: [Роман Мисюрин](https://htmlacademy.ru/profile/lunaticus).
 
 ---
 
