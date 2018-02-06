@@ -15,7 +15,6 @@ var arrFilling = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i] = i + 1;
   }
-  return arr;
 };
 
 // функция для рандомного выведения значений массива без повторений
@@ -31,20 +30,20 @@ var getRandomNumber = function (min, max) {
 arrFilling(urls);
 
 // заполнение свойств фотографий
-function Photos(arrUrls, arrComments) {
+var Photos = function (arrUrls, arrComments) {
   this.url = 'photos/' + shuffle(arrUrls) + '.jpg';
   this.likes = getRandomNumber(15, 200);
   var arrComm = [];
-  var rand = getRandomNumber(1, 5);
-  var rand2 = getRandomNumber(1, 3);
-  for (var i = 0; i < rand; i++) {
+  var numberOfComments = getRandomNumber(1, 5);
+  var numberOfSentence = getRandomNumber(1, 3);
+  for (var i = 0; i < numberOfComments; i++) {
     arrComm.push(shuffle(arrComments));
-    for (var j = 0; j < rand2; j++) {
+    for (var j = 0; j < numberOfSentence; j++) {
       arrComm[i] += shuffle(arrComments);
     }
   }
   this.comments = arrComm;
-}
+};
 
 var pictureTemplate = document.querySelector('#picture-template').content;
 var picturesListElement = document.querySelector('.pictures');
@@ -57,8 +56,7 @@ var createPictureElement = function (photo) {
   photoElement.querySelector('img').setAttribute('src', photo.url);
   photoElement.querySelector('.picture-likes').textContent = photo.likes;
   photoElement.querySelector('.picture-comments').textContent = photo.comments.length;
-
-  return pictureFragment.appendChild(photoElement);
+  pictureFragment.appendChild(photoElement);
 };
 
 // отрисовываем все фотографии на странице
@@ -93,10 +91,8 @@ var getDeclension = function (arrLength) {
 var createOverlayElement = function (photo) {
   galleryOverlay.querySelector('.gallery-overlay-image').setAttribute('src', photo.url);
   galleryOverlay.querySelector('.likes-count').textContent = photo.likes;
-  // galleryOverlay.querySelector('.comments-count').textContent = photo.comments.length;
-  galleryOverlay.querySelector('.gallery-overlay-controls-comments').textContent = photo.comments.length + getDeclension(photo.comments.length);
-
-  return galleryOverlay;
+  galleryOverlay.querySelector('.gallery-overlay-controls-comments').firstChild.textContent = photo.comments.length;
+  galleryOverlay.querySelector('.gallery-overlay-controls-comments').lastChild.textContent = getDeclension(photo.comments.length);
 };
 
 createOverlayElement(photos[0]);
