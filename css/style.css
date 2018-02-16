@@ -263,6 +263,10 @@ body {
   border: 0;
 }
 
+.upload-resize-control-inactive {
+  color: #747474;
+}
+
 .upload-resize-controls-value {
   width: 60px;
 
@@ -270,6 +274,8 @@ body {
 
   border: solid rgba(255, 255, 255, 0.5);
   border-width: 0 1px;
+
+  cursor: pointer;
 }
 
 .upload-resize-controls-button:active {
