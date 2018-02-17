@@ -203,6 +203,7 @@
         }
         imagePreview.classList.toggle(imagePreview.classList[1], false);
         imagePreview.classList.toggle(classEffect);
+
         imagePreview.style.filter = '';
         effectPin.style.left = '100%';
         effectLevelVal.style.width = '100%';
@@ -216,14 +217,30 @@
   var effectLevelVal = effectLevel.querySelector('.upload-effect-level-val');
   var effectPin = effectLevel.querySelector('.upload-effect-level-pin');
 
-  effectLevelLine.addEventListener('mouseup', function () {
-    var overallWidth = effectLevelVal.style.width;
+  var maxLevelFilter = {
+    grayscale: 1,
+    sepia: 1,
+    invert: 1,
+    blur: 5,
+    brightness: 3
+  };
+
+  effectLevelLine.addEventListener('mouseup', function (evt) {
+    var clientX = evt.clientX;
+    var levelLineX = effectLevelLine.getBoundingClientRect().left;
+    var overallWidth = effectLevelLine.getBoundingClientRect().width;
+    if (clientX >= levelLineX && clientX <= levelLineX + overallWidth) {
+      effectPin.style.left = ((100 * (clientX - levelLineX)) / overallWidth) + '%';
+      effectLevelVal.style.width = ((100 * (clientX - levelLineX)) / overallWidth) + '%';
+    }
+
     var styleImg = getComputedStyle(imagePreview);
-    var maxLevel = styleImg.filter;
-    var valueStrFilter = maxLevel.slice(maxLevel.lastIndexOf('(') + 1, maxLevel.length - 1);
-    var valueNumFilter = parseInt(valueStrFilter, 10);
-    var userValue = (valueNumFilter * 70 / parseInt(overallWidth, 10)).toString();
-    var userLevel = maxLevel.replace(valueNumFilter.toString(), userValue);
+    var currentLevel = styleImg.filter;
+    var filterName = currentLevel.slice(0, currentLevel.lastIndexOf('('));
+    var valueStrFilter = currentLevel.slice(currentLevel.lastIndexOf('(') + 1, currentLevel.length - 1);
+    var valueNumFilter = parseFloat(valueStrFilter, 10);
+    var userValue = (maxLevelFilter[filterName] * (clientX - levelLineX) / overallWidth).toString();
+    var userLevel = currentLevel.replace(valueNumFilter.toString(), userValue);
     imagePreview.style.filter = userLevel;
   });
 
