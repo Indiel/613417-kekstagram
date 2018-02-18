@@ -218,30 +218,43 @@
   var effectPin = effectLevel.querySelector('.upload-effect-level-pin');
 
   var maxLevelFilter = {
-    grayscale: 1,
-    sepia: 1,
-    invert: 1,
-    blur: 5,
-    brightness: 3
+    'effect-chrome': 1,
+    'effect-sepia': 1,
+    'effect-marvin': 100,
+    'effect-phobos': 5,
+    'effect-heat': 3
+  };
+
+  var filters = {
+    'effect-chrome': function (ratio) {
+      return 'grayscale(' + ratio.toFixed(1) + ')';
+    },
+    'effect-sepia': function (ratio) {
+      return 'sepia(' + ratio.toFixed(1) + ')';
+    },
+    'effect-marvin': function (ratio) {
+      return 'invert(' + ratio.toFixed(1) + '%)';
+    },
+    'effect-phobos': function (ratio) {
+      return 'blur(' + ratio.toFixed(1) + 'px)';
+    },
+    'effect-heat': function (ratio) {
+      return 'brightness(' + ratio.toFixed(1) + ')';
+    }
   };
 
   effectLevelLine.addEventListener('mouseup', function (evt) {
     var clientX = evt.clientX;
     var levelLineX = effectLevelLine.getBoundingClientRect().left;
     var overallWidth = effectLevelLine.getBoundingClientRect().width;
+    var userPercent = (100 * (clientX - levelLineX)) / overallWidth;
     if (clientX >= levelLineX && clientX <= levelLineX + overallWidth) {
-      effectPin.style.left = ((100 * (clientX - levelLineX)) / overallWidth) + '%';
-      effectLevelVal.style.width = ((100 * (clientX - levelLineX)) / overallWidth) + '%';
+      effectPin.style.left = userPercent + '%';
+      effectLevelVal.style.width = userPercent + '%';
     }
-
-    var styleImg = getComputedStyle(imagePreview);
-    var currentLevel = styleImg.filter;
-    var filterName = currentLevel.slice(0, currentLevel.lastIndexOf('('));
-    var valueStrFilter = currentLevel.slice(currentLevel.lastIndexOf('(') + 1, currentLevel.length - 1);
-    var valueNumFilter = parseFloat(valueStrFilter, 10);
-    var userValue = (maxLevelFilter[filterName] * (clientX - levelLineX) / overallWidth).toString();
-    var userLevel = currentLevel.replace(valueNumFilter.toString(), userValue);
-    imagePreview.style.filter = userLevel;
+    var userFilter = imagePreview.classList[1];
+    var userValue = (maxLevelFilter[userFilter] * (clientX - levelLineX) / overallWidth);
+    imagePreview.style.filter = filters[userFilter](userValue);
   });
 
   // Редактирование размера изображения
