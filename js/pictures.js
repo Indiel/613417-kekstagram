@@ -308,6 +308,26 @@
   // Валидация формы
   var inputHashtag = document.querySelector('.upload-form-hashtags');
 
+  var checkHashtag = function (currentValue) {
+    if (currentValue.charAt(0) !== '#') {
+      inputHashtag.setCustomValidity('Хэш-тег должен начинаться с символа "#" и состоять из одного слова.');
+      inputHashtag.style.border = '2px solid red';
+      return true;
+    } else if (currentValue.length < 2) {
+      inputHashtag.setCustomValidity('Хэш-тег не может состоять только из символа "#".');
+      inputHashtag.style.border = '2px solid red';
+      return true;
+    } else if (currentValue.length > 20) {
+      inputHashtag.setCustomValidity('Максимальная длина одного хэш-тега 20 символов.');
+      inputHashtag.style.border = '2px solid red';
+      return true;
+    } else {
+      inputHashtag.setCustomValidity('');
+      inputHashtag.style.border = '';
+      return false;
+    }
+  };
+
   inputHashtag.addEventListener('input', function (evt) {
     var str = evt.target.value;
     var userHashtags = str.split(' ');
@@ -315,30 +335,19 @@
     if (userHashtags.length > 5) {
       inputHashtag.setCustomValidity('Нельзя указать больше пяти хэш-тегов.');
       inputHashtag.style.border = '2px solid red';
-    } else {
-      inputHashtag.style.border = '';
-      for (var f = 0; f < userHashtags.length; f++) {
-        if (userHashtags[f].charAt(0) !== '#') {
-          inputHashtag.setCustomValidity('Хэш-тег должен начинаться с символа "#" и состоять из одного слова.');
-          inputHashtag.style.border = '2px solid red';
-        } else if (userHashtags[f].length < 2) {
-          inputHashtag.setCustomValidity('Хэш-тег не может состоять только из символа "#".');
-          inputHashtag.style.border = '2px solid red';
-        } else if (userHashtags[f].length > 20) {
-          inputHashtag.setCustomValidity('Максимальная длина одного хэш-тега 20 символов.');
+    } else if (!userHashtags.some(checkHashtag)) {
+      var uniq = {};
+      for (i = 0; i < userHashtags.length; i++) {
+        if (uniq.hasOwnProperty(userHashtags[i].toLowerCase())) {
+          inputHashtag.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды.');
           inputHashtag.style.border = '2px solid red';
         } else {
-          for (var l = f + 1; l < userHashtags.length; l++) {
-            if (userHashtags[f].toLowerCase() === userHashtags[l].toLowerCase()) {
-              inputHashtag.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды.');
-              inputHashtag.style.border = '2px solid red';
-            } else {
-              inputHashtag.setCustomValidity('');
-              inputHashtag.style.border = '';
-            }
-          }
+          uniq[userHashtags[i]] = true;
+          inputHashtag.style.border = '';
+          inputHashtag.setCustomValidity('');
         }
       }
     }
   });
+
 })();
