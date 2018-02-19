@@ -337,14 +337,14 @@
       inputHashtag.style.border = '2px solid red';
     } else if (!userHashtags.some(checkHashtag)) {
       var uniq = {};
+      inputHashtag.style.border = '';
+      inputHashtag.setCustomValidity('');
       for (i = 0; i < userHashtags.length; i++) {
         if (uniq.hasOwnProperty(userHashtags[i].toLowerCase())) {
           inputHashtag.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды.');
           inputHashtag.style.border = '2px solid red';
         } else {
-          uniq[userHashtags[i]] = true;
-          inputHashtag.style.border = '';
-          inputHashtag.setCustomValidity('');
+          uniq[userHashtags[i].toLowerCase()] = true;
         }
       }
     }
