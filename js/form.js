@@ -96,18 +96,53 @@
     }
   };
 
-  effectLevelLine.addEventListener('mouseup', function (evt) {
-    var clientX = evt.clientX;
-    var levelLineX = effectLevelLine.getBoundingClientRect().left;
-    var overallWidth = effectLevelLine.getBoundingClientRect().width;
-    var userPercent = (100 * (clientX - levelLineX)) / overallWidth;
-    if (clientX >= levelLineX && clientX <= levelLineX + overallWidth) {
+  var changePinLocation = function (x) {
+    var effectLineElement = {
+      left: effectLevelLine.getBoundingClientRect().left,
+      width: effectLevelLine.getBoundingClientRect().width
+    };
+
+    if (x >= effectLineElement.left && x <= (effectLineElement.left + effectLineElement.width)) {
+      var userFilter = imagePreview.classList[1];
+      var userValue = (maxLevelFilter[userFilter] * (x - effectLineElement.left) / effectLineElement.width);
+      imagePreview.style.filter = filters[userFilter](userValue);
+
+      var userPercent = (100 * (x - effectLineElement.left)) / effectLineElement.width;
       effectPin.style.left = userPercent + '%';
       effectLevelVal.style.width = userPercent + '%';
     }
-    var userFilter = imagePreview.classList[1];
-    var userValue = (maxLevelFilter[userFilter] * (clientX - levelLineX) / overallWidth);
-    imagePreview.style.filter = filters[userFilter](userValue);
+  };
+
+  effectPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startX = evt.clientX;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      startX = moveEvt.clientX;
+
+      changePinLocation(startX);
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      effectLevel.removeEventListener('mousemove', onMouseMove);
+      effectLevel.removeEventListener('mouseup', onMouseUp);
+    };
+
+    effectLevel.addEventListener('mousemove', onMouseMove);
+    effectLevel.addEventListener('mouseup', onMouseUp);
+  });
+
+  effectLevelLine.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
+    var startX = evt.clientX;
+
+    changePinLocation(startX);
   });
 
   // Редактирование размера изображения
