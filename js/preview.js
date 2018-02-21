@@ -48,23 +48,23 @@
       element.addEventListener('click', function (evt) {
         if (evt.target.tagName === 'IMG') {
           evt.preventDefault();
-          window.openClose.openPopup(galleryOverlay);
+          window.switchPopupVisibility.openPopup(galleryOverlay);
           createOverlayElement(photo);
         }
       });
       element.addEventListener('keydown', function (evt) {
-        window.openClose.isEnterEvent(evt, window.openClose.openPopup(galleryOverlay));
+        window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.openPopup(galleryOverlay));
         createOverlayElement(photo);
       });
     })(smallImg[j], window.photos[j]);
   }
 
   galleryOverlayClose.addEventListener('click', function () {
-    window.openClose.closePopup(galleryOverlay);
+    window.switchPopupVisibility.closePopup(galleryOverlay);
   });
 
   galleryOverlayClose.addEventListener('keydown', function (evt) {
-    window.openClose.isEnterEvent(evt, window.openClose.closePopup(galleryOverlay));
+    window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.closePopup(galleryOverlay));
   });
 
 })();
