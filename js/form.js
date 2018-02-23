@@ -69,7 +69,6 @@
   var effectLevelLine = effectLevel.querySelector('.upload-effect-level-line');
   var effectLevelVal = effectLevel.querySelector('.upload-effect-level-val');
   var effectPin = effectLevel.querySelector('.upload-effect-level-pin');
-  effectPin.style.zIndex = '5';
 
   var maxLevelFilter = {
     'effect-chrome': 1,
