@@ -58,7 +58,7 @@
         imagePreview.classList.toggle(classEffect);
 
         imagePreview.style.filter = '';
-        effectPin.style.left = '455px';
+        effectPin.style.left = '100%';
         effectLevelVal.style.width = '100%';
       });
     })(radios[i], i);
@@ -69,6 +69,7 @@
   var effectLevelLine = effectLevel.querySelector('.upload-effect-level-line');
   var effectLevelVal = effectLevel.querySelector('.upload-effect-level-val');
   var effectPin = effectLevel.querySelector('.upload-effect-level-pin');
+  effectPin.style.zIndex = '5';
 
   var maxLevelFilter = {
     'effect-chrome': 1,
@@ -130,11 +131,11 @@
       upEvt.preventDefault();
 
       effectLevel.removeEventListener('mousemove', onMouseMove);
-      effectLevel.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mouseup', onMouseUp);
     };
 
     effectLevel.addEventListener('mousemove', onMouseMove);
-    effectLevel.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mouseup', onMouseUp);
   });
 
   effectLevelLine.addEventListener('click', function (evt) {
