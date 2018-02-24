@@ -43,20 +43,20 @@
   var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
   var smallImg = picturesListElement.querySelectorAll('a');
 
-  for (var j = 0; j < smallImg.length; j++) {
-    (function (element, photo) {
-      element.addEventListener('click', function (evt) {
+  for (var j = 0; j < window.photos.length; j++) {
+    (function (photo) {
+      photo.addEventListener('click', function (evt) {
         if (evt.target.tagName === 'IMG') {
           evt.preventDefault();
           window.switchPopupVisibility.openPopup(galleryOverlay);
           createOverlayElement(photo);
         }
       });
-      element.addEventListener('keydown', function (evt) {
+      photo.addEventListener('keydown', function (evt) {
         window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.openPopup(galleryOverlay));
         createOverlayElement(photo);
       });
-    })(smallImg[j], window.photos[j]);
+    })(window.photos[j]);
   }
 
   galleryOverlayClose.addEventListener('click', function () {

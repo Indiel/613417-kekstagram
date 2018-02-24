@@ -1,23 +1,23 @@
 'use strict';
 
 (function () {
-  var COMMENTS = ['Всё отлично!',
-    'В целом всё неплохо. Но не всё.',
-    'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-    'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-    'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-    'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-  var doubleComments = [];
-  var urls = new Array(25);
-  var urlsLength = urls.length;
-  window.photos = [];
+  // var COMMENTS = ['Всё отлично!',
+  //   'В целом всё неплохо. Но не всё.',
+  //   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  //   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  //   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  //   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
+  // var doubleComments = [];
+  // var urls = new Array(25);
+  // var urlsLength = urls.length;
+  // window.photos = [];
 
   // функция заполнения массива
-  var arrFilling = function (arr) {
-    for (var i = 0; i < arr.length; i++) {
-      arr[i] = i + 1;
-    }
-  };
+  // var arrFilling = function (arr) {
+  //   for (var i = 0; i < arr.length; i++) {
+  //     arr[i] = i + 1;
+  //   }
+  // };
 
   // функция для рандомного выведения значений массива без повторений
   var shuffle = function (arr) {
@@ -25,25 +25,25 @@
     return arr.splice(randomValue, 1).toString();
   };
 
-  var getRandomNumber = function (min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-  };
+  // var getRandomNumber = function (min, max) {
+  //   return Math.floor(Math.random() * (max - min) + min);
+  // };
 
-  // заполнение свойств фотографий
-  var Photos = function (arrUrls, arrComments) {
-    this.url = 'photos/' + shuffle(arrUrls) + '.jpg';
-    this.likes = getRandomNumber(15, 200);
-    var arrComm = [];
-    var numberOfComments = getRandomNumber(1, 50);
-    var numberOfSentence = getRandomNumber(1, 3);
-    for (var i = 0; i < numberOfComments; i++) {
-      arrComm.push(shuffle(arrComments));
-      for (var j = 0; j < numberOfSentence; j++) {
-        arrComm[i] += shuffle(arrComments);
-      }
-    }
-    this.comments = arrComm;
-  };
+  // // заполнение свойств фотографий
+  // var Photos = function (arrUrls, arrComments) {
+  //   this.url = 'photos/' + shuffle(arrUrls) + '.jpg';
+  //   this.likes = getRandomNumber(15, 200);
+  //   var arrComm = [];
+  //   var numberOfComments = getRandomNumber(1, 50);
+  //   var numberOfSentence = getRandomNumber(1, 3);
+  //   for (var i = 0; i < numberOfComments; i++) {
+  //     arrComm.push(shuffle(arrComments));
+  //     for (var j = 0; j < numberOfSentence; j++) {
+  //       arrComm[i] += shuffle(arrComments);
+  //     }
+  //   }
+  //   this.comments = arrComm;
+  // };
 
   // заполнение контейнера шаблонными фрагментами (фотографиями)
   var createPictureElement = function (photo) {
@@ -60,15 +60,28 @@
   var picturesListElement = document.querySelector('.pictures');
   var pictureFragment = document.createDocumentFragment();
 
-  arrFilling(urls);
+  // arrFilling(urls);
 
   // отрисовываем все фотографии на странице
-  for (var k = 0; k < urlsLength; k++) {
-    doubleComments = COMMENTS.slice();
-    window.photos[k] = new Photos(urls, doubleComments);
-    createPictureElement(window.photos[k]);
-  }
+  // for (var k = 0; k < urlsLength; k++) {
+  //   doubleComments = COMMENTS.slice();
+  //   window.photos[k] = new Photos(urls, doubleComments);
+  //   createPictureElement(window.photos[k]);
+  // }
 
-  picturesListElement.appendChild(pictureFragment);
+  // picturesListElement.appendChild(pictureFragment);
+
+  window.photos = [];
+
+  window.backend.load(function (elements) {
+    // var lengthArr = elements.length;
+    for (var i = 0; i < elements.length; i++) {
+      // shuffle(elements);
+      window.photos[i] = elements[i];
+      createPictureElement(window.photos[i]);
+    }
+
+    picturesListElement.appendChild(pictureFragment);
+  });
 
 })();
