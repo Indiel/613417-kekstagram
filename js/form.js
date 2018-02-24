@@ -203,4 +203,13 @@
     }
   });
 
+  var form = document.querySelector('#upload-select-image');
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      uploadOverlay.classList.add('hidden');
+    });
+    evt.preventDefault();
+  }, window.errorHandler);
+
 })();

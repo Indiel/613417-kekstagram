@@ -12,18 +12,18 @@
   // var urlsLength = urls.length;
   // window.photos = [];
 
-  // функция заполнения массива
+  // // функция заполнения массива
   // var arrFilling = function (arr) {
   //   for (var i = 0; i < arr.length; i++) {
   //     arr[i] = i + 1;
   //   }
   // };
 
-  // функция для рандомного выведения значений массива без повторений
-  var shuffle = function (arr) {
-    var randomValue = Math.floor(Math.random() * arr.length);
-    return arr.splice(randomValue, 1).toString();
-  };
+  // // функция для рандомного выведения значений массива без повторений
+  // var shuffle = function (arr) {
+  //   var randomValue = Math.floor(Math.random() * arr.length);
+  //   return arr.splice(randomValue, 1).toString();
+  // };
 
   // var getRandomNumber = function (min, max) {
   //   return Math.floor(Math.random() * (max - min) + min);
@@ -45,24 +45,24 @@
   //   this.comments = arrComm;
   // };
 
-  // заполнение контейнера шаблонными фрагментами (фотографиями)
-  var createPictureElement = function (photo) {
-    var photoElement = pictureTemplate.cloneNode(true);
+  // // заполнение контейнера шаблонными фрагментами (фотографиями)
+  // var createPictureElement = function (photo) {
+  //   var photoElement = pictureTemplate.cloneNode(true);
 
-    photoElement.querySelector('img').setAttribute('src', photo.url);
-    photoElement.querySelector('.picture-likes').textContent = photo.likes;
-    photoElement.querySelector('.picture-comments').textContent = photo.comments.length;
+  //   photoElement.querySelector('img').setAttribute('src', photo.url);
+  //   photoElement.querySelector('.picture-likes').textContent = photo.likes;
+  //   photoElement.querySelector('.picture-comments').textContent = photo.comments.length;
 
-    pictureFragment.appendChild(photoElement);
-  };
+  //   pictureFragment.appendChild(photoElement);
+  // };
 
-  var pictureTemplate = document.querySelector('#picture-template').content;
-  var picturesListElement = document.querySelector('.pictures');
-  var pictureFragment = document.createDocumentFragment();
+  // var pictureTemplate = document.querySelector('#picture-template').content;
+  // var picturesListElement = document.querySelector('.pictures');
+  // var pictureFragment = document.createDocumentFragment();
 
   // arrFilling(urls);
 
-  // отрисовываем все фотографии на странице
+  // // отрисовываем все фотографии на странице
   // for (var k = 0; k < urlsLength; k++) {
   //   doubleComments = COMMENTS.slice();
   //   window.photos[k] = new Photos(urls, doubleComments);
@@ -71,17 +71,20 @@
 
   // picturesListElement.appendChild(pictureFragment);
 
-  window.photos = [];
+  // window.backend.load(function (photos) {
+  //   // var lengthArr = photos.length;
+  //   for (var i = 0; i < photos.length; i++) {
+  //     // shuffle(photos);
+  //     var photoElement = pictureTemplate.cloneNode(true);
 
-  window.backend.load(function (elements) {
-    // var lengthArr = elements.length;
-    for (var i = 0; i < elements.length; i++) {
-      // shuffle(elements);
-      window.photos[i] = elements[i];
-      createPictureElement(window.photos[i]);
-    }
+  //     photoElement.querySelector('img').setAttribute('src', photos[i].url);
+  //     photoElement.querySelector('.picture-likes').textContent = photos[i].likes;
+  //     photoElement.querySelector('.picture-comments').textContent = photos[i].comments.length;
 
-    picturesListElement.appendChild(pictureFragment);
-  });
+  //     pictureFragment.appendChild(photoElement);
+  //   }
+
+  //   picturesListElement.appendChild(pictureFragment);
+  // });
 
 })();
