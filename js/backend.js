@@ -35,7 +35,7 @@ window.backend = (function () {
       xhr.send();
     },
     save: function (data, onLoad, onError) {
-      var URL = ' https://js.dump.academy/kekstagram';
+      var URL = 'https://js.dump.academy/kekstagram';
 
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';

@@ -1,10 +1,5 @@
 'use strict';
 
-/*
-Данный модуль предназначен для открывания попапов просмотра и редактирования фотографий
-(в том числе с помощью клавиши Enter) и их закрывания (в том числе с помощью клавиши Esc).
-*/
-
 window.switchPopupVisibility = (function () {
 
   var ENTER_KEYCODE = 13;
@@ -33,6 +28,11 @@ window.switchPopupVisibility = (function () {
     },
     isEnterEvent: function (evt, action) {
       if (evt.keyCode === ENTER_KEYCODE) {
+        action();
+      }
+    },
+    isEscEvent: function (evt, action) {
+      if (evt.keyCode === ESC_KEYCODE) {
         action();
       }
     }
