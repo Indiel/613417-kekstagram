@@ -8,7 +8,9 @@
 
   var textarea = document.querySelector('.upload-form-description');
 
-  var openAndReset = function () {
+  uploadFile.addEventListener('click', function () {
+    uploadFile.value = '';
+
     transformValues = copyTransformValues.slice();
     imagePreview.style.transform = 'scale(' + transformValues[0] + ')';
     resizeControlsValue.value = '100%';
@@ -24,25 +26,18 @@
     inputHashtag.style.border = '';
     inputHashtag.value = '';
     textarea.value = '';
-
-    window.switchPopupVisibility.openPopup(uploadOverlay);
-  };
-
-  var closeAndReset = function () {
-    uploadFile.value = '';
-    window.switchPopupVisibility.closePopup(uploadOverlay);
-  };
+  });
 
   uploadFile.addEventListener('change', function () {
-    openAndReset();
+    window.switchPopupVisibility.openPopup(uploadOverlay);
   });
 
   overlayClose.addEventListener('click', function () {
-    closeAndReset();
+    window.switchPopupVisibility.closePopup(uploadOverlay);
   });
 
   overlayClose.addEventListener('keydown', function (evt) {
-    window.switchPopupVisibility.isEnterEvent(evt, closeAndReset);
+    window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.closePopup(uploadOverlay));
   });
 
   // Применение эффекта для изображения
@@ -205,7 +200,7 @@
   var inputHashtag = document.querySelector('.upload-form-hashtags');
 
   var checkHashtag = function (currentValue) {
-    if (currentValue.length === 0) {
+    if (!currentValue.length) {
       inputHashtag.setCustomValidity('');
       inputHashtag.style.border = '';
       return false;
@@ -254,7 +249,7 @@
 
   form.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(form), function () {
-      closeAndReset();
+      window.switchPopupVisibility.closePopup(uploadOverlay);
     });
     evt.preventDefault();
   }, window.errorHandler);

@@ -30,11 +30,6 @@ window.switchPopupVisibility = (function () {
       if (evt.keyCode === ENTER_KEYCODE) {
         action();
       }
-    },
-    isEscEvent: function (evt, action) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        action();
-      }
     }
   };
 
