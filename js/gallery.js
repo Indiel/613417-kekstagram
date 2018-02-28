@@ -33,7 +33,7 @@
   var successHandler = function (data) {
     window.cloneData = data;
 
-    window.updatePhoto(window.cloneData);
+    window.sortPhoto(window.cloneData);
   };
 
   window.backend.load(successHandler, window.errorHandler);

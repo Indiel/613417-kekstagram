@@ -31,42 +31,45 @@
   [].forEach.call(filtersRadio, function (radio) {
     radio.addEventListener('click', function () {
       picturesListElement.innerHTML = '';
-      window.debounce(window.updatePhoto(window.cloneData));
+      window.debounce(window.updatePhoto);
     });
   });
 
-  window.updatePhoto = function (arr) {
-    var photos = arr.slice();
+  window.sortPhoto = function (arr) {
+    window.updatePhoto = function () {
+      var photos = arr.slice();
 
-    var checkSelectedRadio = [].filter.call(filtersRadio, function (radio) {
-      return radio.checked;
-    });
-
-    if (checkSelectedRadio[0].value === 'random') {
-      var clone = [];
-      var length = photos.length;
-
-      for (var i = 0; i < length; i++) {
-        clone[i] = shuffle(photos)[0];
-        createPictureElement(clone[i]);
-      }
-    } else {
-      if (checkSelectedRadio[0].value === 'popular') {
-        photos.sort(function (left, right) {
-          return right.likes - left.likes;
-        });
-      } else if (checkSelectedRadio[0].value === 'discussed') {
-        photos.sort(function (left, right) {
-          return right.comments.length - left.comments.length;
-        });
-      }
-      photos.forEach(function (element) {
-        createPictureElement(element);
+      var checkSelectedRadio = [].filter.call(filtersRadio, function (radio) {
+        return radio.checked;
       });
-    }
 
-    picturesListElement.appendChild(pictureFragment);
-    window.overlayVisibility(arr, arr.length);
+      if (checkSelectedRadio[0].value === 'random') {
+        var clone = [];
+        var length = photos.length;
+
+        for (var i = 0; i < length; i++) {
+          clone[i] = shuffle(photos)[0];
+          createPictureElement(clone[i]);
+        }
+      } else {
+        if (checkSelectedRadio[0].value === 'popular') {
+          photos.sort(function (left, right) {
+            return right.likes - left.likes;
+          });
+        } else if (checkSelectedRadio[0].value === 'discussed') {
+          photos.sort(function (left, right) {
+            return right.comments.length - left.comments.length;
+          });
+        }
+        photos.forEach(function (element) {
+          createPictureElement(element);
+        });
+      }
+
+      picturesListElement.appendChild(pictureFragment);
+      window.overlayVisibility(arr, arr.length);
+    };
+    window.updatePhoto();
   };
 
 })();
