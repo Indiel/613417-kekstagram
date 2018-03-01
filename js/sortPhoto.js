@@ -28,7 +28,6 @@
 
   [].forEach.call(filtersRadio, function (radio) {
     radio.addEventListener('click', function () {
-      picturesListElement.innerHTML = '';
       window.debounce(window.updatePhoto);
     });
   });
