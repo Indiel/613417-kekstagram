@@ -24,8 +24,6 @@
   var pictureFragment = document.createDocumentFragment();
 
   var filtersPhoto = document.querySelector('.filters');
-  filtersPhoto.classList.remove('filters-inactive');
-
   var filtersRadio = filtersPhoto.querySelectorAll('[name = "filter"]');
 
   [].forEach.call(filtersRadio, function (radio) {
@@ -70,6 +68,7 @@
       window.overlayVisibility(photos, photos.length);
     };
     window.updatePhoto();
+    filtersPhoto.classList.remove('filters-inactive');
   };
 
 })();
