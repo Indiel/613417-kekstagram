@@ -245,6 +245,7 @@
     }
   });
 
+  // Отправка формы на сервер
   var form = document.querySelector('#upload-select-image');
 
   form.addEventListener('submit', function (evt) {
