@@ -51,7 +51,7 @@
 
   // Показ изображения в полноэкранном режиме
   window.overlayVisibility = function (images, length) {
-    var smallImg = picturesListElement.querySelectorAll('a');
+    var smallImages = picturesListElement.querySelectorAll('a');
 
     for (var j = 0; j < length; j++) {
       (function (element, photo) {
@@ -63,10 +63,15 @@
           }
         });
         element.addEventListener('keydown', function (evt) {
-          window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.openPopup(galleryOverlay));
-          createOverlayElement(photo);
+          // window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.openPopup(galleryOverlay));
+          // createOverlayElement(photo);
+          if (evt.keyCode === 13) {
+            evt.preventDefault();
+            window.switchPopupVisibility.openPopup(galleryOverlay);
+            createOverlayElement(photo);
+          }
         });
-      })(smallImg[j], images[j]);
+      })(smallImages[j], images[j]);
     }
   };
 

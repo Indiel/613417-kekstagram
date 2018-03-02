@@ -29,6 +29,7 @@
   });
 
   uploadFile.addEventListener('change', function () {
+    window.selectFile();
     window.switchPopupVisibility.openPopup(uploadOverlay);
   });
 
