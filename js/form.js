@@ -38,32 +38,32 @@
   });
 
   overlayClose.addEventListener('keydown', function (evt) {
-    window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.closePopup(uploadOverlay));
+    if (window.switchPopupVisibility.isEnterEvent(evt)) {
+      window.switchPopupVisibility.closePopup(uploadOverlay);
+    }
   });
 
   // Применение эффекта для изображения
   var imagePreview = document.querySelector('.effect-image-preview');
   var radios = document.querySelectorAll('[name = "effect"]');
 
-  for (var i = 0; i < radios.length; i++) {
-    (function (radio, index) {
-      radio.addEventListener('click', function () {
-        var classEffect = radio.id.replace('upload-', '');
-        if (index === 0) {
-          effectLevel.classList.add('hidden');
-        } else {
-          effectLevel.classList.remove('hidden');
-        }
-        imagePreview.classList.toggle(imagePreview.classList[1], false);
-        imagePreview.classList.toggle(classEffect);
+  radios.forEach(function (radio, index) {
+    radio.addEventListener('click', function () {
+      var classEffect = radio.id.replace('upload-', '');
+      if (index === 0) {
+        effectLevel.classList.add('hidden');
+      } else {
+        effectLevel.classList.remove('hidden');
+      }
+      imagePreview.classList.toggle(imagePreview.classList[1], false);
+      imagePreview.classList.toggle(classEffect);
 
-        imagePreview.style.filter = '';
-        effectPin.style.left = '455px';
-        effectLevelVal.style.width = '100%';
-        inputLevelValue.value = '100';
-      });
-    })(radios[i], i);
-  }
+      imagePreview.style.filter = '';
+      effectPin.style.left = '455px';
+      effectLevelVal.style.width = '100%';
+      inputLevelValue.value = '100';
+    });
+  });
 
   // Слайдер
   var effectLevel = document.querySelector('.upload-effect-level');
@@ -235,7 +235,7 @@
       var uniq = {};
       inputHashtag.style.border = '';
       inputHashtag.setCustomValidity('');
-      for (i = 0; i < userHashtags.length; i++) {
+      for (var i = 0; i < userHashtags.length; i++) {
         if (uniq.hasOwnProperty(userHashtags[i].toLowerCase())) {
           inputHashtag.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды.');
           inputHashtag.style.border = '2px solid red';

@@ -26,11 +26,8 @@ window.switchPopupVisibility = (function () {
         onPopupEscPress(evt, element);
       });
     },
-    isEnterEvent: function (evt, action) {
-      if (evt.keyCode === ENTER_KEYCODE) {
-        // evt.preventDefault();
-        action();
-      }
+    isEnterEvent: function (evt) {
+      return evt.keyCode === ENTER_KEYCODE;
     }
   };
 

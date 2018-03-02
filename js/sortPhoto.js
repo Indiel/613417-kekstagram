@@ -40,14 +40,21 @@
         return radio.checked;
       });
 
+      var depictPage = function (updateArr) {
+        picturesListElement.appendChild(pictureFragment);
+        window.overlayVisibility(updateArr, updateArr.length);
+      };
+
       if (checkSelectedRadio[0].value === 'random') {
-        var clone = [];
+        var clonePhotos = [];
         var length = photos.length;
 
         for (var i = 0; i < length; i++) {
-          clone[i] = shuffle(photos)[0];
-          createPictureElement(clone[i]);
+          clonePhotos[i] = shuffle(photos)[0];
+          createPictureElement(clonePhotos[i]);
         }
+        depictPage(clonePhotos);
+
       } else {
         if (checkSelectedRadio[0].value === 'popular') {
           photos.sort(function (left, right) {
@@ -61,10 +68,8 @@
         photos.forEach(function (element) {
           createPictureElement(element);
         });
+        depictPage(photos);
       }
-
-      picturesListElement.appendChild(pictureFragment);
-      window.overlayVisibility(photos, photos.length);
     };
     window.updatePhoto();
     filtersPhoto.classList.remove('filters-inactive');

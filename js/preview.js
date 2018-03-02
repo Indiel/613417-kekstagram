@@ -44,7 +44,9 @@
   });
 
   galleryOverlayClose.addEventListener('keydown', function (evt) {
-    window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.closePopup(galleryOverlay));
+    if (window.switchPopupVisibility.isEnterEvent(evt)) {
+      window.switchPopupVisibility.closePopup(galleryOverlay);
+    }
   });
 
   var picturesListElement = document.querySelector('.pictures');
@@ -63,9 +65,7 @@
           }
         });
         element.addEventListener('keydown', function (evt) {
-          // window.switchPopupVisibility.isEnterEvent(evt, window.switchPopupVisibility.openPopup(galleryOverlay));
-          // createOverlayElement(photo);
-          if (evt.keyCode === 13) {
+          if (window.switchPopupVisibility.isEnterEvent(evt)) {
             evt.preventDefault();
             window.switchPopupVisibility.openPopup(galleryOverlay);
             createOverlayElement(photo);
