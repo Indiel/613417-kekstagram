@@ -52,7 +52,7 @@
   var picturesListElement = document.querySelector('.pictures');
 
   // Показ изображения в полноэкранном режиме
-  window.overlayVisibility = function (images, length) {
+  window.showOverlay = function (images, length) {
     var smallImages = picturesListElement.querySelectorAll('a');
 
     for (var j = 0; j < length; j++) {

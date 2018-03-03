@@ -23,6 +23,7 @@
     imagePreview.style.filter = '';
     inputLevelValue.value = '';
 
+    inputHashtag.setCustomValidity('');
     inputHashtag.style.border = '';
     inputHashtag.value = '';
     textarea.value = '';
@@ -99,18 +100,18 @@
     }
   };
 
-  var changePinLocation = function (x) {
+  var changePinLocation = function (coordinateX) {
     var effectLineElement = {
       left: effectLevelLine.getBoundingClientRect().left,
       width: effectLevelLine.getBoundingClientRect().width
     };
 
-    if (x >= effectLineElement.left && x <= (effectLineElement.left + effectLineElement.width)) {
+    if (coordinateX >= effectLineElement.left && coordinateX <= (effectLineElement.left + effectLineElement.width)) {
       var userFilter = imagePreview.classList[1];
-      var userValue = (maxLevelFilter[userFilter] * (x - effectLineElement.left) / effectLineElement.width);
+      var userValue = (maxLevelFilter[userFilter] * (coordinateX - effectLineElement.left) / effectLineElement.width);
       imagePreview.style.filter = filters[userFilter](userValue);
 
-      var userPercent = (100 * (x - effectLineElement.left)) / effectLineElement.width;
+      var userPercent = (100 * (coordinateX - effectLineElement.left)) / effectLineElement.width;
       effectPin.style.left = userPercent + '%';
       effectLevelVal.style.width = userPercent + '%';
       inputLevelValue.value = Math.floor(userPercent);
@@ -239,6 +240,7 @@
         if (uniq.hasOwnProperty(userHashtags[i].toLowerCase())) {
           inputHashtag.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды.');
           inputHashtag.style.border = '2px solid red';
+          return;
         } else {
           uniq[userHashtags[i].toLowerCase()] = true;
         }
@@ -252,8 +254,8 @@
   form.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(form), function () {
       window.switchPopupVisibility.closePopup(uploadOverlay);
-    });
+    }, window.errorHandler);
     evt.preventDefault();
-  }, window.errorHandler);
+  });
 
 })();

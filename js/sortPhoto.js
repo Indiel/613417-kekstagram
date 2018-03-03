@@ -42,7 +42,7 @@
 
       var depictPage = function (updateArr) {
         picturesListElement.appendChild(pictureFragment);
-        window.overlayVisibility(updateArr, updateArr.length);
+        window.showOverlay(updateArr, updateArr.length);
       };
 
       if (checkSelectedRadio[0].value === 'random') {

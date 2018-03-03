@@ -23,13 +23,13 @@
     });
   };
 
-  window.cloneData = [];
+  var cloneData = [];
 
   // Получаем фотки с сервера
   var successHandler = function (data) {
-    window.cloneData = data;
+    cloneData = data;
 
-    window.sortPhoto(window.cloneData);
+    window.sortPhoto(cloneData);
   };
 
   window.backend.load(successHandler, window.errorHandler);
